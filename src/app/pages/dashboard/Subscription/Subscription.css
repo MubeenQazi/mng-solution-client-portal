@@ -1,0 +1,80 @@
+/** @format */
+.subscription-table-container {
+  border-radius: 10px;
+  border: "1px solid #D1D2D433";
+}
+
+.subscription-table-container th,
+.subscription-table-container td {
+  padding: 12px !important;
+}
+
+.subscription-table-container .action-btn a {
+  background: #0a7eca80;
+  border: 1px solid #0a7eca;
+  padding: 10px 20px;
+  border-radius: 38px;
+  color: #fff;
+}
+
+.subscription-table-container .action-btn a:hover {
+  color: #fff;
+  -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+          box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.subscription-table-container .table-tag {
+  /* UI Properties */
+  background: #0a7eca 0% 0% no-repeat padding-box;
+  color: #fff;
+  border-radius: 5px;
+  padding: 7px 10px;
+  font-size: 14px;
+  margin-right: 16px;
+  opacity: 1;
+}
+
+.subscription-table-container .Mui-active {
+  color: #fff !important;
+}
+
+.subscription-table-container .Mui-active .MuiTableSortLabel-icon {
+  color: #fff !important;
+}
+
+.subscription-table-container span.MuiTableSortLabel-root:hover {
+  color: #fff;
+}
+
+.subscription-table-container span.MuiTableSortLabel-root:hover .MuiTableSortLabel-icon {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) and (max-width: 1450px) {
+  .subscription-table-container th,
+  .subscription-table-container td {
+    font-size: 14px !important;
+  }
+  .subscription-table-container .table-col-1 {
+    min-width: 180px;
+  }
+  .subscription-table-container .action-btn {
+    min-width: 130px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 1023px) {
+  .subscription-table-container th,
+  .subscription-table-container td,
+  .subscription-table-container tr {
+    line-height: 30px !important;
+    min-width: 200px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .subscription-table-container .table-tag {
+    padding: 4px;
+  }
+}
+/*# sourceMappingURL=Subscription.css.map */

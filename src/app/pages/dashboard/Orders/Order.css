@@ -1,0 +1,58 @@
+/** @format */
+.order-table-container {
+  border-radius: 10px;
+  border: "1px solid #D1D2D433";
+}
+
+.order-table-container th,
+.order-table-container td {
+  padding: 12px !important;
+}
+
+.order-table-container .action-btn a {
+  background: #0a7eca80;
+  border: 1px solid #0a7eca;
+  padding: 10px 20px;
+  border-radius: 38px;
+  color: #fff;
+}
+
+.order-table-container .action-btn a:hover {
+  color: #fff;
+  -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+          box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.order-table-container .Mui-active {
+  color: #fff !important;
+}
+
+.order-table-container .Mui-active .MuiTableSortLabel-icon {
+  color: #fff !important;
+}
+
+.order-table-container span.MuiTableSortLabel-root:hover {
+  color: #fff;
+}
+
+.order-table-container span.MuiTableSortLabel-root:hover .MuiTableSortLabel-icon {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) and (max-width: 1450px) {
+  .order-table-container th,
+  .order-table-container td {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 1023px) {
+  .order-table-container th,
+  .order-table-container td,
+  .order-table-container tr {
+    font-size: 16px !important;
+    line-height: 30px !important;
+    min-width: 200px;
+  }
+}
+/*# sourceMappingURL=Order.css.map */

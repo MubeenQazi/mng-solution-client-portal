@@ -1,0 +1,190 @@
+.support-first-sec {
+  display: flex !important;
+  align-items: center;
+  .support-banner-imgbox {
+    position: relative;
+    .hour-imgbox {
+      background: #fff;
+      box-shadow: 0px 20px 40px #00000012;
+      border-radius: 50%;
+      height: 140px;
+      width: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: absolute;
+      top: 12%;
+      right: 8%;
+      .hour-support {
+        font-size: 18px;
+        color: #a5a5ae;
+        text-transform: uppercase;
+      }
+    }
+    .support-setting {
+      background: #fff;
+      box-shadow: 0px 20px 40px #00000012;
+      position: absolute;
+      bottom: 23%;
+      left: 11%;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+  }
+  .support-first-right {
+    p.support-first-content {
+      color: #666666;
+      font-size: 24px;
+      line-height: 44px;
+    }
+    .support-email-box {
+      background: #fff7f2;
+      display: flex;
+      border-radius: 38px;
+      padding: 10px;
+      align-items: center;
+      margin-top: 50px;
+      .mail-img {
+        background: #ee7623;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0px 30px 0px 10px;
+      }
+      .first-sec-email {
+        font-size: 24px;
+        color: #666666;
+        span {
+          font-weight: bold;
+        }
+        a {
+          color: inherit;
+        }
+      }
+    }
+  }
+}
+form {
+  .input-row {
+    width: 100%;
+    margin-bottom: 20px;
+
+    input,
+    textarea,
+    .MuiInputBase-multiline {
+      background-color: #fbfbfb;
+      width: 100%;
+    }
+    fieldset {
+      border-radius: 15px;
+      border-color: #9ba4af;
+    }
+  }
+  .contact-radio-button {
+    .MuiFormControlLabel-label {
+      color: #999999 !important;
+    }
+    label.Mui-focused {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+  button.btn-support {
+    text-transform: capitalize;
+  }
+}
+h2.primary-heading-support {
+  font-size: 30px;
+  color: #333;
+}
+
+@media (min-width: 1200px) and (max-width: 1450px) {
+  .support-first-sec {
+    .support-banner-imgbox {
+      .support-setting {
+        left: 5%;
+        bottom: 14%;
+      }
+      .hour-imgbox {
+        height: 120px;
+        width: 120px;
+        right: 3%;
+        top: 3%;
+      }
+    }
+
+    .support-first-right {
+      .support-email-box {
+        .mail-img {
+          margin-right: 10px;
+        }
+        .first-sec-email {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 600px) {
+  .about {
+    margin-top: -50px;
+  }
+  .support-first-sec {
+    .support-banner-imgbox {
+      .hour-imgbox {
+        display: none;
+      }
+      .support-setting {
+        display: none;
+      }
+    }
+    .support-first-right {
+      .support-email-box {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+        .first-sec-email {
+          text-align: center;
+          margin-top: 15px;
+          a {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+  .contact-radio-box {
+    flex-direction: column;
+    button.btn-support {
+      align-self: center;
+    }
+  }
+}
+@media (min-width: 900px) and (max-width: 1200px) {
+  .support-first-sec {
+    flex-direction: column !important;
+    .support-first-right {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 387px) {
+  .support-first-right {
+    .support-email-box {
+      .first-sec-email {
+        a{
+          font-size: 13px !important;
+        }
+        
+      }
+    }
+  }
+}

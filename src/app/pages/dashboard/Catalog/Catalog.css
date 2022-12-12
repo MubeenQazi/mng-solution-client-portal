@@ -1,0 +1,281 @@
+/** @format */
+body {
+  font-family: "Raleway" !important;
+}
+
+body .modal-head {
+  border-bottom: 1px solid #9ba4af;
+  margin-bottom: 20px;
+}
+
+body .modal-head .popup-head h3 {
+  font-size: 24px;
+  color: #333333;
+  font-weight: bold;
+}
+
+body .modal-head .popup-head h5 {
+  color: #666666;
+  font-size: 16px;
+  margin-top: -15px;
+  font-weight: 400;
+}
+
+body .popup-main {
+  margin-top: 40px;
+}
+
+body .popup-main p.popup-field-label {
+  color: #333333;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+}
+
+body .popup-main .payment-select {
+  border: 1px solid #9ba4af;
+  border-radius: 38px;
+  padding: 7px 20px;
+  width: 150px;
+}
+
+body .popup-main .payment-select::before {
+  display: none;
+}
+
+body .popup-main .payment-select::after {
+  display: none;
+}
+
+body .popup-main .payment-select div#demo-simple-select {
+  font-size: 16px;
+  color: #9ba4af;
+  padding: 0;
+}
+
+body .popup-main button.renew-option {
+  border: 1px solid #9ba4af !important;
+  border-radius: 38px !important;
+  font-size: 16px;
+  text-transform: capitalize;
+  padding: 5px 20px;
+  color: #9ba4af;
+}
+
+body .popup-main button.renew-option:first-child {
+  margin-right: 20px;
+}
+
+body .popup-main button.Mui-selected {
+  border-color: #ee7623 !important;
+  background: #ee7623 !important;
+  color: #fff !important;
+}
+
+body .popup-main .quantity-select {
+  width: 50px;
+  height: 30px;
+  /* Firefox */
+}
+
+body .popup-main .quantity-select input::-webkit-outer-spin-button,
+body .popup-main .quantity-select input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body .popup-main .quantity-select input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+body .popup-main .quantity-select label {
+  line-height: 16px;
+}
+
+body .popup-main .quantity-select .MuiInputBase-root {
+  border-radius: 0px;
+  height: 30px;
+}
+
+body .popup-main .quantity-select .MuiInputBase-root input {
+  height: 12px !important;
+  color: #999;
+  font-size: 16px;
+}
+
+body .popup-main .quantity-select fieldset.MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+
+body .popup-main .set-quantity {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #9ba4af;
+  border-radius: 38px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+body .popup-main .set-quantity button.quantity-minmax {
+  border-radius: 0px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  min-width: 40px;
+  color: #9ba4af;
+}
+
+body .popup-main .set-quantity button.quantity-sub {
+  border-right: 1px solid #eee;
+  margin-right: 10px;
+}
+
+body .popup-main .set-quantity button.quantity-add {
+  border-left: 1px solid #eee;
+}
+
+body .modal-item {
+  margin-top: 20px;
+  gap: 50px;
+}
+
+body .modal-item button.submit-btn {
+  border: 1px solid;
+  border-radius: 38px;
+  color: #fff;
+  background: #ee7623;
+  text-transform: capitalize;
+  font-size: 20px;
+  padding: 5px 20px;
+}
+
+body .modal-item button.submit-btn:disabled {
+  color: #999999;
+  background: none;
+  border-color: #999999;
+}
+
+body .price-per-month {
+  color: #ee7623;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .panel-light {
+    padding: 10px;
+    overflow-x: hidden;
+  }
+  .panel-light .accordian {
+    padding: 5px;
+  }
+  .panel-light .accordian-item-heading {
+    font-size: 18px !important;
+    line-height: 25px !important;
+  }
+  .panel-light .accordian-item-inner {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 0;
+    width: calc(100% - 16px);
+    margin-left: 0;
+  }
+  .panel-light .accordian-item-inner .item-inner-col {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 !important;
+  }
+  .panel-light .accordian-item-inner .item-inner-col p.accordian-inner-para {
+    font-size: 15px !important;
+    line-height: 25px !important;
+  }
+  .panel-light .accordian-item-inner .item-inner-col .item-mspr {
+    width: 90%;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  .panel-light .accordian-item-inner .item-inner-col .item-mspr p {
+    font-size: 13px !important;
+    line-height: 20px !important;
+  }
+  .panel-light .accordian-item-inner .item-inner-col button.buy-sub {
+    height: 100% !important;
+    line-height: 30px !important;
+    font-size: 15px !important;
+    width: 95% !important;
+    margin-left: 3%;
+  }
+  .panel-light .accordian-item-inner .item-inner-col .accordian-last-para {
+    line-height: 25px !important;
+    margin-top: 15px;
+    margin-left: 3%;
+  }
+  .panel-light .accordian-details {
+    padding: 0px;
+  }
+  .popup-head h3 {
+    font-size: 20px !important;
+  }
+  .popup-head h5 {
+    font-size: 14px !important;
+  }
+  .price-per-month {
+    font-size: 18px !important;
+  }
+  .modal-item {
+    margin-top: 20px;
+    gap: 50px;
+  }
+  .modal-item button.submit-btn {
+    font-size: 18px !important;
+    padding: 5px 20px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .accordian-item-inner {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+  .accordian-item-inner .item-inner-col {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+  .item-mspr {
+    height: -webkit-max-content !important;
+    height: -moz-max-content !important;
+    height: max-content !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+}
+
+@media (min-width: 1250px) and (max-width: 1450px) {
+  button.buy-sub {
+    margin-left: -15px;
+  }
+}
+/*# sourceMappingURL=Catalog.css.map */
