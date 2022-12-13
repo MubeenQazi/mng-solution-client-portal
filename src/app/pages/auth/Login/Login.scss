@@ -110,10 +110,24 @@ body {
 }
 .popup-content {
   flex-direction: column;
+
+  .icon{
+          font-size: 80px;
+        }
+        .success{
+          color: #03ad03;
+        }
+        .popup-heading{
+              margin-bottom: 30px;
+              margin-top: 10px;
+    font-weight: 600;
+    font-size: 30px;
+        }
+        
   .popup-details {
-    // font-size: 30px;
     color: #333333;
     margin-top: 40px;
+
     .label-contact-support,
     .contact-email,
     .contact-phone

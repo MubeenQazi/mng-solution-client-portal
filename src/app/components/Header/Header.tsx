@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import TableRow from "@mui/material/TableRow";
@@ -22,8 +22,10 @@ import PersonIcon from "@mui/icons-material/Person";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logout = () => {
     dispatch(doLogout());
+    navigate("/?a=signout");
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

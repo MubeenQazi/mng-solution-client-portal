@@ -106,8 +106,8 @@ export function CustomizedDialogs(validate: any) {
               }
             </div>
               <div className="modal-body">
-              <h1>{validate.validate ? 'Awesome' : 'Fail'}</h1>
-              <p>{validate.validate ? 'you are ready to proceed' : 'all fields are requred'}</p>
+              <h1>{validate.validate ? 'Success' : 'Error'}</h1>
+              <p>{validate.validate ? 'You have successfully submitted the quotation request' : 'Please fill out all of the mandatory fields.'}</p>
               </div>
             
             <div className="modal-item">

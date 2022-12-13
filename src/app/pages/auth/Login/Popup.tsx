@@ -1,17 +1,4 @@
 /** @format */
-
-// import React from 'react'
-
-// const Popup = () => {
-//   return (
-//     <div>
-//       Hi this is popup
-//     </div>
-//   )
-// }
-
-// export default Popup
-// import question from "../../../../AppImages/question.png";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
@@ -25,6 +12,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import "./Login.scss";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Link } from "react-router-dom";
+import MSButton from "../../../components/Button";
+
+
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -104,5 +96,36 @@ export function CustomizedDialogs() {
         <DialogActions></DialogActions>
       </BootstrapDialog>
     </div>
+  );
+}
+
+
+
+export function LogoutPopup() {
+  const [open, setOpen] = useState(true);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={handleClose}
+        />
+      <DialogContent className="popup-content d-flex justify-content-center align-items-center">
+        <CheckCircleOutlineIcon className="success icon" /> 
+          <Typography variant="h4" className="popup-heading">Signout Successfully</Typography>
+          <Link to={'/'}>
+                    <MSButton text="Ok" />
+                  </Link>
+        </DialogContent>
+        <DialogActions></DialogActions>
+      </BootstrapDialog>
   );
 }

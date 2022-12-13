@@ -8,11 +8,14 @@ import LockIcon from "@mui/icons-material/Lock";
 import Footer from "../../../components/Footer/Footer";
 import "./Login.scss";
 
-// import SimpleDialogDemo from "./Popup";
-import { CustomizedDialogs, BootstrapDialog } from "./Popup";
+import { CustomizedDialogs, LogoutPopup, BootstrapDialog } from "./Popup";
+import { useSearchParams } from "react-router-dom";
 
 const Login = (props: any) => {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+
   const login = () => {
     const loginPayload = {
       user: "admin",
@@ -57,25 +60,21 @@ const Login = (props: any) => {
                 <h5>to the {userType} Portal</h5>
               </div>
               <div className="content-right">
-                {/* <Button className="question-btn" onClick={handleClickOpen}> */}
+                {
+                  (searchParams.get('a') == "signout") && <LogoutPopup />
+                }
                 <CustomizedDialogs />
-                {/* </Button> */}
               </div>
             </div>
             <Button className="btn-submit" onClick={login}>
-              {/* <div className="btn-component"> */}
               <img
                 className="btn-img"
                 src={require("../../../../AppImages/microsoft.png")}
               />
               <h3 className="btn-text">Continue with Microsoft</h3>
-              {/* </div> */}
             </Button>
           </div>
-          {/* <p>Login page</p>
-          <Button variant="contained" onClick={login}>
-            Login
-          </Button> */}
+
         </div>
       </Grid>
       <Footer />
