@@ -2,24 +2,22 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-import DownloadButton from "../../components/DownloadButton/DownloadButton";
+import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../submodule/components/SearchBar/SearchBar";
 import "./Orders.scss";
 import {
   stableSort,
   getComparator,
   Order,
-} from "../../components/Tables/Table";
-import { TableStyled } from "../../components/Tables/TableStyles";
-import {
-  OrderData,
-} from "../../components/Tables/TableData";
-import EnhancedTableHead from "../../components/Tables/TableHead";
+} from "../../submodule/components/Tables/Table";
+import { TableStyled } from "../../submodule/components/Tables/TableStyles";
+import EnhancedTableHead from "../../submodule/components/Tables/TableHead";
+import {OrderData} from "../../submodule/components/Tables/TableData";
 
 interface Data {
   id: number;

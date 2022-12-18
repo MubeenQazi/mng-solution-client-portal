@@ -1,0 +1,3 @@
+[submodule "src/submodule"]
+	path = src/submodule
+	url = https://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@github.com/MubeenQazi/mng-solution-shared.git

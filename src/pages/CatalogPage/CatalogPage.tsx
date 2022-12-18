@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../submodule/components/SearchBar/SearchBar";
 import {BuySubsciptionCustomizedDialog} from "../../components/Dialog/Dialog";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";

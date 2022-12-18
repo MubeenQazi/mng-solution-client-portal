@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
-import MSButton from "../Button/Button";
+import MSButton from "../../submodule/components/MSButton/MSButton";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DialogActions from "@mui/material/DialogActions";

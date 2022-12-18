@@ -4,7 +4,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import ContactUs from "../../components/ContactUsForm/ContactUsForm";
+import ContactUs from "../../submodule/components/ContactUsForm/ContactUsForm";
 import {AppImages} from "../../shared/images";
 import "./Support.scss";
 
