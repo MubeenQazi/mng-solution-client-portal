@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -14,6 +16,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import "./OrderDetail.scss";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "transparent",
@@ -31,7 +34,7 @@ const OrderDetailPage = () => {
   return (
     <div>
       <Box
-        className="d-md-flex justify-content-md-between align-items-md-center"
+        className="d-md-flex justify-content-md-between align-items-md-center detail-box"
         sx={{
           marginBottom: `10px`,
         }}
@@ -40,21 +43,25 @@ const OrderDetailPage = () => {
           {location.state.item}{" "}
           <span
             className={
-              location.state.status === "Active" ? "ms-active" : "ms-suspend"
+              location.state.status == "Active" ? "ms-active" : "ms-suspend"
             }
           >
             ({location.state.status})
           </span>
         </h1>
-        <DownloadButton rows={ location.state.lineItem } columns={columns} filename="orderDetail.csv" />
+        <DownloadButton
+          rows={location.state.lineItem}
+          columns={columns}
+          filename="orderDetail.csv"
+        />
       </Box>
-      <Box sx={{ marginTop: `30px` }}>
+      <Box>
         <div className="panel-light">
           <Box className="d-md-flex justify-content-md-between align-items-md-center">
             <h2>Order ID: {location.state.id}</h2>
             <h4>{location.state.date}</h4>
           </Box>
-          <TableContainer className="order-table-container">
+          <TableContainer className="order-table-container table-order-detail">
             <Table
               sx={{
                 marginBottom: `50px`,
@@ -80,16 +87,13 @@ const OrderDetailPage = () => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ textDecoration: "underline" }}>
-                    SKU
+                    Item
                   </TableCell>
                   <TableCell
                     sx={{ textDecoration: "underline" }}
                     align="center"
                   >
                     Quantity
-                  </TableCell>
-                  <TableCell sx={{ textDecoration: "underline" }}>
-                    Item
                   </TableCell>
                   <TableCell
                     sx={{ textDecoration: "underline" }}
@@ -103,6 +107,9 @@ const OrderDetailPage = () => {
                   >
                     Term
                   </TableCell>
+                  <TableCell sx={{ textDecoration: "underline" }}>
+                    SKU
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -111,13 +118,11 @@ const OrderDetailPage = () => {
                     key={lineItem.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell>
-                      {lineItem.sku}
-                    </TableCell>
-                    <TableCell align="center">{lineItem.quantity}</TableCell>
                     <TableCell>{lineItem.item}</TableCell>
+                    <TableCell align="center">{lineItem.quantity}</TableCell>
                     <TableCell align="center">{lineItem.unitPrice}</TableCell>
                     <TableCell align="center">{lineItem.term}</TableCell>
+                    <TableCell> {lineItem.sku} </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -135,20 +140,27 @@ const OrderDetailPage = () => {
               <Grid item xs={12} md={6}>
                 <Item className="d-md-flex align-items-md-center justify-content-lg-end">
                   <h3 className="ms-meta-title">Monthly Payment: </h3>
-                  <h3 className="ms-meta-data"> ${location.state.monthlyPayment} </h3>
+                  <h3 className="ms-meta-data">
+                    {" "}
+                    ${location.state.monthlyPayment}{" "}
+                  </h3>
                 </Item>
               </Grid>
 
               <Grid item xs={12} md={6}>
                 <Item className="d-md-flex align-items-md-center">
                   <h3 className="ms-meta-title">Term Duration: </h3>
-                  <h3 className="ms-meta-data">{location.state.termDuration}</h3>
+                  <h3 className="ms-meta-data">
+                    {location.state.termDuration}
+                  </h3>
                 </Item>
               </Grid>
               <Grid item xs={12} md={6}>
                 <Item className="d-md-flex align-items-md-center justify-content-lg-end">
                   <h3 className="ms-meta-title">Order Total: </h3>
-                  <h3 className="ms-meta-data">${location.state.orderTotal} </h3>
+                  <h3 className="ms-meta-data">
+                    ${location.state.orderTotal}{" "}
+                  </h3>
                 </Item>
               </Grid>
             </Grid>
@@ -156,7 +168,11 @@ const OrderDetailPage = () => {
         </div>
         <br></br>
         <div>
-          <ListItem component={Link} to={"/order"} state={{activeSideBar: location.state?.activeSideBar}}>
+          <ListItem
+            component={Link}
+            to={"/dashboard/order"}
+            state={{ activeSideBar: location.state?.activeSideBar }}
+          >
             <MSButton
               text="Back"
               backgroundColor="#9BA4AF"
