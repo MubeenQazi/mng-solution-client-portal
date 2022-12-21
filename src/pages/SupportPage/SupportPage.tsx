@@ -1,11 +1,9 @@
-import {
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+/** @format */
+
+import { Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import ContactUs from "../../submodule/components/ContactUsForm/ContactUsForm";
-import {AppImages} from "../../shared/images";
+import { AppImages } from "../../shared/images";
 import "./Support.scss";
 
 const { supportImg, email, hour24, setting } = AppImages;
@@ -22,7 +20,7 @@ const SupportPage = () => {
             marginTop={10}
           >
             <Grid className="support-banner-imgbox" item xs={12} md={6}>
-              <img src={supportImg} alt="support"  style={{width: "100%"}}/>
+              <img src={supportImg} alt="support" style={{ width: "100%" }} />
               <Grid item className="hour-imgbox">
                 <img src={hour24} alt="hours" />
                 <Typography className="hour-support">Support</Typography>

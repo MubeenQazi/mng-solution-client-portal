@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -17,7 +19,7 @@ import {
 } from "../../submodule/components/Tables/Table";
 import { TableStyled } from "../../submodule/components/Tables/TableStyles";
 import EnhancedTableHead from "../../submodule/components/Tables/TableHead";
-import {OrderData} from "../../submodule/components/Tables/TableData";
+import { OrderData } from "../../submodule/components/Tables/TableData";
 
 interface Data {
   id: number;
@@ -83,8 +85,6 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-
-
 const OrdersPage = () => {
   const [rows, setRows] = useState<Data[]>(originalRows);
   const [searched, setSearched] = useState<string>("");
@@ -125,17 +125,18 @@ const OrdersPage = () => {
     "Billing Plan",
     "Term Duration",
     "Monthly Payment",
-    "Order Total"
+    "Order Total",
   ];
   const clickableRow = (row: any) => {
-    navigate(`detail/${row.id}`, { state: { ...row, ...{ activeSideBar: location.state?.activeSideBar } } });
-  }
-
+    navigate(`detail/${row.id}`, {
+      state: { ...row, ...{ activeSideBar: location.state?.activeSideBar } },
+    });
+  };
 
   return (
     <div>
       <Box sx={{ textAlign: `right`, marginBottom: `30px` }}>
-        <DownloadButton rows={ rows } columns={columns} filename="order.csv" />
+        <DownloadButton rows={rows} columns={columns} filename="order.csv" />
       </Box>
       <Box>
         <SearchBar value={searched} onChange={onChange} />
@@ -154,36 +155,43 @@ const OrdersPage = () => {
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
-                headCells= {headCells}
+                headCells={headCells}
               />
               <TableBody>
-                {stableSort(rows, getComparator(order, orderBy)).map(
-                  (row) => {
-                    return (
-                      <TableRow hover tabIndex={-1} key={row.id} onClick={() => clickableRow(row)}>
-                        <TableCell>
-                          {row.date}
-                        </TableCell>
-                        <TableCell>{row.count}</TableCell>
-                        <TableCell>{row.item}</TableCell>
-                        <TableCell>{row.price}</TableCell>
-                        <TableCell>{row.coTerm}</TableCell>
-                        <TableCell
-                          className={`ms-${
-                            row.status === "Active" ? "active" : "suspend"
-                          }`}
+                {stableSort(rows, getComparator(order, orderBy)).map((row) => {
+                  return (
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      key={row.id}
+                      onClick={() => clickableRow(row)}
+                    >
+                      <TableCell>{row.date}</TableCell>
+                      <TableCell>{row.count}</TableCell>
+                      <TableCell>{row.item}</TableCell>
+                      <TableCell>{row.price}</TableCell>
+                      <TableCell>{row.coTerm}</TableCell>
+                      <TableCell
+                        className={`ms-${
+                          row.status === "Active" ? "active" : "suspend"
+                        }`}
+                      >
+                        {row.status}
+                      </TableCell>
+                      <TableCell className="action-btn">
+                        <Link
+                          to={{ pathname: `detail/${row.id}` }}
+                          state={{
+                            ...row,
+                            ...{ activeSideBar: location.state?.activeSideBar },
+                          }}
                         >
-                          {row.status}
-                        </TableCell>
-                        <TableCell className="action-btn">
-                          <Link to={{ pathname: `detail/${row.id}` }} state={{...row, ...{activeSideBar: location.state?.activeSideBar}}}>
-                            {row.action}
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                )}
+                          {row.action}
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </TableStyled>
           </TableContainer>
