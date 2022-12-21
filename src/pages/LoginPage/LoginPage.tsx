@@ -26,14 +26,12 @@ const Login = (props: any) => {
         var match = document.cookie.match(
           RegExp("(?:^|;\\s*)" + name + "=([^;]*)")
         );
-        return match ? loginByCookie() : null;
+        return match && null;
       })
       .catch(function (error) {
         // navigate("?e=unauthorized");
       });
   });
-
-  const loginByCookie = () => {};
 
   const attemptLogin = () => {
     var state = Math.floor(Math.random() * 1000) + 1;
