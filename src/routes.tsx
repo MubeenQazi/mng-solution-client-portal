@@ -2,6 +2,7 @@
 
 import { Routes as Router, Route, BrowserRouter } from "react-router-dom";
 import NotfoundPage from "./submodule/pages/NotFoundPage/NotfoundPage";
+import Start from "./submodule/pages/Start/Start";
 import Layout from "./submodule/components/admin/Layout/Layout";
 import SubscriptionPage from "./pages/SubscriptionPage/SubscriptionPage";
 import CatalogPage from "./pages/CatalogPage/CatalogPage";
@@ -16,6 +17,7 @@ const Routes = () => {
     <BrowserRouter>
       <Router>
         <Route path="*" element={<NotfoundPage />} />
+        <Route path="/start" element={<Start />} />
         <Route path="/login" element={<LoginPage userType="client" />} />
 
         <Route path="/" element={<Layout />}>
