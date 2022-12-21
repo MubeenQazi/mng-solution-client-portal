@@ -16,6 +16,9 @@ import { useState } from "react";
 import "./Login.scss";
 import { Link } from "react-router-dom";
 import MSButton from "../../submodule/components/MSButton/MSButton";
+import { AppImages } from "../../shared/images";
+import "./Login.scss";
+const { logo, loginPopupImage } = AppImages;
 
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -81,10 +84,7 @@ export function CustomizedDialogs() {
           onClose={handleClose}
         />
         <DialogContent className="popup-content d-flex justify-content-center align-items-center">
-          <img
-            src={require("../../../../AppImages/LoginPopUpImg.png")}
-            alt="popup"
-          />
+          <img src={loginPopupImage} alt="popup" />
           <Typography className="popup-details">
             <p>
               If you're having trouble logging in, we can help. Please contact

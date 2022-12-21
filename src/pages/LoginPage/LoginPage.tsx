@@ -9,7 +9,8 @@ import { CustomizedDialogs, LogoutPopup, ErrorPopup } from "./Popup";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { AppImages } from "../../shared/images";
-const { logo, microsoft } = AppImages;
+import "./Login.scss";
+const { microsoft, logo } = AppImages;
 
 const Login = (props: any) => {
   const navigate = useNavigate();
