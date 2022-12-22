@@ -17,7 +17,7 @@ const Routes = () => {
     <BrowserRouter>
       <Router>
         <Route path="*" element={<NotfoundPage />} />
-        <Route path="/start" element={<Start />} />
+        <Route path="/start" element={<Start app="portal" />} />
         <Route path="/login" element={<LoginPage userType="client" />} />
 
         <Route path="/" element={<Layout />}>
