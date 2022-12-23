@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
@@ -20,16 +20,16 @@ import {
 import { TableStyled } from "../../submodule/components/Tables/TableStyles";
 import EnhancedTableHead from "../../submodule/components/Tables/TableHead";
 import { OrderData } from "../../submodule/components/Tables/TableData";
+import axios from "axios";
 
 interface Data {
-  id: number;
-  date: string;
-  count: string;
-  item: string;
-  price: string;
-  coTerm: string;
-  status: string;
-  action: string;
+  id: any;
+  creation_date: any;
+  billing_cycle: any;
+  monthly_price: any;
+  total_price: any;
+  status: any;
+  // action: any;
 }
 const originalRows: Data[] = OrderData;
 interface HeadCell {
@@ -42,34 +42,28 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "date",
+    id: "creation_date",
     numeric: false,
     disablePadding: true,
     label: "Date",
   },
   {
-    id: "count",
-    numeric: true,
-    disablePadding: true,
-    label: "Count",
-  },
-  {
-    id: "item",
+    id: "billing_cycle",
     numeric: false,
     disablePadding: true,
-    label: "Item",
+    label: "Billing Cycle",
   },
   {
-    id: "price",
+    id: "monthly_price",
     numeric: true,
     disablePadding: true,
-    label: "Price",
+    label: "Montly Price",
   },
   {
-    id: "coTerm",
+    id: "total_price",
     numeric: false,
     disablePadding: true,
-    label: "Co Term",
+    label: "Total Price",
   },
   {
     id: "status",
@@ -77,25 +71,29 @@ const headCells: readonly HeadCell[] = [
     disablePadding: true,
     label: "Status",
   },
-  {
-    id: "action",
-    numeric: false,
-    disablePadding: true,
-    label: "Action",
-  },
 ];
 
 const OrdersPage = () => {
   const [rows, setRows] = useState<Data[]>(originalRows);
   const [searched, setSearched] = useState<string>("");
   const [order, setOrder] = React.useState<Order>("desc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("date");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("creation_date");
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    axios
+      .get("https://api.msolcsptest.com/portal/v1/orders")
+      .then(function (response) {
+        if (response.data) {
+          setRows(response.data);
+        }
+      });
+  }, []);
+
   const requestSearch = (searchedVal: string) => {
     const filteredRows = originalRows.filter((row) => {
-      return row.item.toLowerCase().includes(searchedVal.toLowerCase());
+      return row.total_price.toLowerCase().includes(searchedVal.toLowerCase());
     });
     setRows(filteredRows);
   };
@@ -166,11 +164,10 @@ const OrdersPage = () => {
                       key={row.id}
                       onClick={() => clickableRow(row)}
                     >
-                      <TableCell>{row.date}</TableCell>
-                      <TableCell>{row.count}</TableCell>
-                      <TableCell>{row.item}</TableCell>
-                      <TableCell>{row.price}</TableCell>
-                      <TableCell>{row.coTerm}</TableCell>
+                      <TableCell>{row.creation_date}</TableCell>
+                      <TableCell>{row.billing_cycle}</TableCell>
+                      <TableCell>{row.monthly_price}</TableCell>
+                      <TableCell>{row.total_price}</TableCell>
                       <TableCell
                         className={`ms-${
                           row.status === "Active" ? "active" : "suspend"
@@ -186,7 +183,7 @@ const OrdersPage = () => {
                             ...{ activeSideBar: location.state?.activeSideBar },
                           }}
                         >
-                          {row.action}
+                          View Details
                         </Link>
                       </TableCell>
                     </TableRow>

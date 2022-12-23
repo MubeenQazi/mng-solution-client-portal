@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import Box from "@mui/material/Box";
 import MSButton from "../../submodule/components/MSButton/MSButton";
@@ -22,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const SubscriptionDetailPage = () => {
   const location = useLocation();
-  const subscriptionDetail =  location.state;
+  const subscriptionDetail = location.state;
 
   const subscriptionDetailArr = [];
   subscriptionDetailArr.push(subscriptionDetail);
@@ -45,7 +47,7 @@ const SubscriptionDetailPage = () => {
     "Status",
     "Type",
     "Description",
-    "List"
+    "List",
   ];
 
   return (
@@ -57,7 +59,7 @@ const SubscriptionDetailPage = () => {
         }}
       >
         <h1>
-          {location.state.subscription}{" "}
+          {location.state.offer_name}{" "}
           <span
             className={
               location.state.status === "Active" ? "ms-active" : "ms-suspend"
@@ -66,23 +68,24 @@ const SubscriptionDetailPage = () => {
             ({location.state.status})
           </span>
         </h1>
-        <DownloadButton rows={ subscriptionDetailArr } columns={columns} filename="subscriptionDetail.csv" />
+        <DownloadButton
+          rows={subscriptionDetailArr}
+          columns={columns}
+          filename="subscriptionDetail.csv"
+        />
       </Box>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} lg={5}>
             <Item className="d-md-flex align-items-md-center">
               <h3 className="ms-meta-title">Quantity: </h3>
-              <h3 className="ms-meta-data"> {location.state.count}</h3>
+              <h3 className="ms-meta-data"> {location.state.quantity}</h3>
             </Item>
           </Grid>
           <Grid item xs={12} md={6} lg={7}>
             <Item className="d-md-flex align-items-md-center">
               <h3 className="ms-meta-title">Subscriptions Period: </h3>
-              <h3 className="ms-meta-data">
-                {" "}
-                {location.state.subscriptionPeriod}
-              </h3>
+              <h3 className="ms-meta-data"> {location.state.billing_cycle}</h3>
             </Item>
           </Grid>
 
@@ -91,18 +94,18 @@ const SubscriptionDetailPage = () => {
               <h3 className="ms-meta-title">Auto-Renewal: </h3>
               <RadioGroup
                 row
-                value={value}
+                value={location.state.will_auto_renew}
                 onChange={handleChange}
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
                 <FormControlLabel
-                  value="Yes"
+                  value="true"
                   control={<Radio />}
                   label="Enable"
                 />
                 <FormControlLabel
-                  value="No"
+                  value="false"
                   control={<Radio />}
                   label="Disable"
                 />
@@ -112,7 +115,7 @@ const SubscriptionDetailPage = () => {
           <Grid item xs={12} md={6} lg={7}>
             <Item className="d-md-flex align-items-md-center">
               <h3 className="ms-meta-title">Subscriptions Type: </h3>
-              <h3 className="ms-meta-data">{location.state.type} </h3>
+              <h3 className="ms-meta-data">{location.state.billing_type} </h3>
             </Item>
           </Grid>
         </Grid>
@@ -121,13 +124,16 @@ const SubscriptionDetailPage = () => {
         <div className="panel-light">
           <h2>Description</h2>
           <p className="ms-description-summary">
-            {location.state.description}
+            {location.state.offer_description}
           </p>
-          <div dangerouslySetInnerHTML={{__html: location.state.descriptionList}} />
         </div>
         <br></br>
         <div>
-          <ListItem component={Link} to={"/subscription"}  state={{activeSideBar: location.state?.activeSideBar}}>
+          <ListItem
+            component={Link}
+            to={"/subscription"}
+            state={{ activeSideBar: location.state?.activeSideBar }}
+          >
             <MSButton
               text="Back"
               backgroundColor="#9BA4AF"
