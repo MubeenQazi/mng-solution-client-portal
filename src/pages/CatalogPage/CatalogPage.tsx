@@ -1,5 +1,7 @@
-import React, {useState, MouseEvent} from "react";
-import {styled} from "@mui/system";
+/** @format */
+
+import React, { useState, MouseEvent, useEffect } from "react";
+import { styled } from "@mui/system";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -9,10 +11,11 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import SearchBar from "../../submodule/components/SearchBar/SearchBar";
-import {BuySubsciptionCustomizedDialog} from "../../components/Dialog/Dialog";
+import { BuySubsciptionCustomizedDialog } from "../../components/Dialog/Dialog";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import "./Catalog.scss";
+import axios from "axios";
 
 import {
   Button,
@@ -36,7 +39,7 @@ const StyledBox = styled(Box)({
   borderRadius: `50px`,
 });
 
-const Item = styled(Paper)(({theme}) => ({
+const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   //...theme.typography.body2,
   padding: theme.spacing(1),
@@ -44,9 +47,24 @@ const Item = styled(Paper)(({theme}) => ({
   color: theme.palette.text.secondary,
 }));
 
+const defaultValues: any = [
+  {
+    id: 1,
+    name: "Microsoft 365 E3",
+    description:
+      "Microsoft 365 E3 combines best-in-class productivity apps with core security and compliance capabilities.",
+    msrp_price: 100,
+    discount_price: 90,
+    billing_term_options: "p1m, p1ym, p1ya",
+    has_auto_renew: true,
+    is_nce: true,
+    status: "active",
+  },
+];
+
 const CatalogPage = () => {
-  const accordian = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [option, setOption] = useState("monthly");
+  const [accordians, setAccordians] = useState(defaultValues);
   const handleChange = (event: MouseEvent<HTMLElement>, newColor: string) => {
     setOption(newColor);
   };
@@ -54,6 +72,16 @@ const CatalogPage = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [checked, setChecked] = useState(false);
   const [value, setValue] = useState<number>(0);
+
+  useEffect(() => {
+    axios
+      .get("https://api.msolcsptest.com/portal/v1/offers")
+      .then(function (response) {
+        if (response.data) {
+          setAccordians(response.data);
+        }
+      });
+  }, []);
 
   const min = 0;
   const max = 100;
@@ -191,7 +219,7 @@ const CatalogPage = () => {
 
             <div className="modal-item">
               <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={7}>
                   <FormGroup>
                     <FormControlLabel
                       control={<Checkbox onClick={onCheckboxClick} />}
@@ -200,7 +228,7 @@ const CatalogPage = () => {
                     />
                   </FormGroup>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={5}>
                   <Button
                     id="add-btn"
                     className="submit-btn"
@@ -216,41 +244,25 @@ const CatalogPage = () => {
       </>
     );
   };
+
   return (
     <div>
       <SearchBar />
       <div className="catalog-panel">
         <div className="panel-light">
-          {accordian.map((i) => {
+          {accordians.map((accordian: any) => {
             return (
-              <Accordion
-                sx={{
-                  marginBottom: `15px`,
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                  borderRadius: `10px`,
-                  boxShadow: `0px 6px 10px #00000017`,
-                  border: "1px solid rgba(209, 210, 212, 1)",
-                }}
-                className="accordian"
-                key={i}
-              >
+              <Accordion className="accordian" key={accordian.id}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography
-                    style={{ font: `normal normal 700 30px/60px Raleway` }}
-                    className="accordian-item-heading"
-                  >
-                    Microsoft 365 E3
+                  <Typography className="accordian-item-heading">
+                    {accordian.name}
                   </Typography>
                 </AccordionSummary>
-                <AccordionDetails
-                  className="accordian-details"
-                  sx={{ paddingBottom: `61px` }}
-                >
+                <AccordionDetails className="accordian-details">
                   <Box sx={{ flexGrow: 1 }}>
                     <Grid
                       className="accordian-item-inner"
@@ -259,41 +271,21 @@ const CatalogPage = () => {
                     >
                       <Grid className="item-inner-col" item xs={6} md={8}>
                         <Item>
-                          <Typography
-                            style={{
-                              font: `normal normal normal 24px/38px Raleway`,
-                              color: `#666666`,
-                            }}
-                            className="accordian-inner-para"
-                          >
-                            Microsoft 365 E3 combines best-in-class productivity
-                            apps with core security and compliance capabilities.
+                          <Typography className="accordian-inner-para">
+                            {accordian.description}
                           </Typography>
                         </Item>
                       </Grid>
 
                       <Grid className="item-inner-col" item xs={12} md={8}>
                         <Item>
-                          <StyledBox
-                            className="item-mspr"
-                            style={{ backgroundColor: `#FDF1E9` }}
-                          >
-                            <Typography
-                              style={{
-                                font: `normal normal 400 24px/44px Raleway`,
-                                color: `#666666`,
-                              }}
-                            >
+                          <StyledBox className="item-mspr light">
+                            <Typography className="item-label">
                               MSRP:
                             </Typography>
 
-                            <Typography
-                              style={{
-                                font: `normal normal 400 24px/44px Raleway`,
-                                color: `#666666`,
-                              }}
-                            >
-                              $15.00 /user/month
+                            <Typography className="item-label">
+                              ${accordian.msrp_price} /user/month
                             </Typography>
                           </StyledBox>
                         </Item>
@@ -301,26 +293,13 @@ const CatalogPage = () => {
 
                       <Grid className="item-inner-col" item xs={12} md={8}>
                         <Item>
-                          <StyledBox
-                            className="item-mspr"
-                            style={{ backgroundColor: `#F0F0F0` }}
-                          >
-                            <Typography
-                              style={{
-                                font: `normal normal 700 24px/44px Raleway`,
-                                color: `#666666`,
-                              }}
-                            >
+                          <StyledBox className="item-mspr gray">
+                            <Typography className="item-label-bold">
                               Client Discount:
                             </Typography>
 
-                            <Typography
-                              style={{
-                                font: `normal normal 700 24px/44px Raleway`,
-                                color: `#666666`,
-                              }}
-                            >
-                              $13.50 /user/month
+                            <Typography className="item-label-bold">
+                              ${accordian.discount_price} /user/month
                             </Typography>
                           </StyledBox>
                         </Item>
@@ -329,18 +308,11 @@ const CatalogPage = () => {
                       <Grid className="item-inner-col" item xs={12} md={4}>
                         <Item sx={{ textAlign: `center` }}>
                           <div>
-                            {/* <MSButton
-                        text="Buy Subscription"
-                        sx={{ backgroundColor: "#EE7623" }}
-                      /> */}
-                            <BuySubsciptionCustomizedDialog dialogText="Buy Subscriptions" popupContent={Modal()} />
-                            <Typography
-                              style={{
-                                font: `normal normal normal 16px/44px Raleway`,
-                                color: `#666666`,
-                              }}
-                              className="accordian-last-para"
-                            >
+                            <BuySubsciptionCustomizedDialog
+                              dialogText="Buy Subscriptions"
+                              popupContent={Modal()}
+                            />
+                            <Typography className="accordian-last-para">
                               annual commitment required
                             </Typography>
                           </div>

@@ -184,8 +184,45 @@ body {
     padding: 0px 15px;
     .accordian {
       border-radius: 10px;
+      margin-bottom: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 6px 10px #00000017;
+      border: 1px solid rgba(209, 210, 212, 1);
       &::before {
         display: none;
+      }
+      .accordian-item-heading {
+        font: normal normal 700 30px/60px Raleway;
+      }
+      .accordian-details {
+        padding-bottom: 61px;
+
+        p.accordian-inner-para {
+          font: normal normal normal 24px/38px Raleway;
+          color: #666666;
+        }
+        .accordian-last-para {
+          font: normal normal normal 16px/44px Raleway;
+          color: #666666;
+        }
+        .light {
+          background-color: #fdf1e9;
+        }
+        .gray {
+          background-color: #f0f0f0;
+        }
+        .item-mspr {
+          .item-label {
+            font: normal normal 400 24px/44px Raleway;
+            color: #666666;
+          }
+          .item-label-bold {
+            font: normal normal 700 24px/44px Raleway;
+            color: #666666;
+          }
+        }
       }
     }
   }
@@ -234,9 +271,10 @@ body {
           // width: max-content !important;
           height: 100% !important;
           line-height: 30px !important;
-          font-size: 15px !important;
-          width: 95% !important;
+          font-size: 13px !important;
+          width: 100% !important;
           margin-left: 3%;
+          padding: 5px 10px !important;
         }
         .accordian-last-para {
           line-height: 25px !important;

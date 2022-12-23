@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+/** @format */
+
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,20 +15,22 @@ import {
   getComparator,
   Order,
 } from "../../submodule/components/Tables/Table";
-import {TableStyled} from "../../submodule/components/Tables/TableStyles";
+import { TableStyled } from "../../submodule/components/Tables/TableStyles";
 import EnhancedTableHead from "../../submodule/components/Tables/TableHead";
 import "./Subscription.scss";
-import {SubscriptionData} from "../../submodule/components/Tables/TableData";
+import { SubscriptionData } from "../../submodule/components/Tables/TableData";
+import axios from "axios";
 
 interface Data {
-  id: number;
-  subscription: string;
-  count: string;
-  renewsOn: string;
-  terms: string;
-  autoRenewel: string;
-  status: string;
-  action: string;
+  id: any;
+  offer_name: any;
+  quantity: any;
+  commitment_end_date: any;
+  term_duration: any;
+  will_auto_renew: any;
+  status: any;
+  is_nce: any;
+  action: any;
 }
 
 const originalRows: Data[] = SubscriptionData;
@@ -40,31 +44,31 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "subscription",
+    id: "offer_name",
     numeric: false,
     disablePadding: true,
     label: "Subscription",
   },
   {
-    id: "count",
+    id: "quantity",
     numeric: false,
     disablePadding: true,
-    label: "Count",
+    label: "Quantity",
   },
   {
-    id: "renewsOn",
+    id: "commitment_end_date",
     numeric: false,
     disablePadding: true,
     label: "Renews On",
   },
   {
-    id: "terms",
+    id: "term_duration",
     numeric: false,
     disablePadding: true,
     label: "Terms",
   },
   {
-    id: "autoRenewel",
+    id: "will_auto_renew",
     numeric: false,
     disablePadding: true,
     label: "Auto Renewel",
@@ -83,18 +87,27 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-
 const SubscriptionPage = () => {
   const [rows, setRows] = useState<Data[]>(originalRows);
   const [searched, setSearched] = useState<string>("");
   const [order, setOrder] = React.useState<Order>("desc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("subscription");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("offer_name");
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    axios
+      .get("https://api.msolcsptest.com/portal/v1/subscriptions")
+      .then(function (response) {
+        if (response.data) {
+          setRows(response.data);
+        }
+      });
+  }, []);
+
   const requestSearch = (searchedVal: string) => {
     const filteredRows = originalRows.filter((row) => {
-      return row.subscription.toLowerCase().includes(searchedVal.toLowerCase());
+      return row.offer_name.toLowerCase().includes(searchedVal.toLowerCase());
     });
     setRows(filteredRows);
   };
@@ -114,37 +127,40 @@ const SubscriptionPage = () => {
   };
   const columns = [
     "ID",
-    "Subscription",
-    "Count",
+    "Offer Name",
+    "Quantity",
     "Renews On",
     "Terms",
     "Auto Renewel",
     "Status",
     "Type",
     "Description",
-    "List"
+    "List",
   ];
 
   const clickableRow = (row: any) => {
-    navigate(`detail/${row.id}`, {state: {...row, ...{activeSideBar: location.state?.activeSideBar}}});
-  }
+    navigate(`detail/${row.id}`, {
+      state: { ...row, ...{ activeSideBar: location.state?.activeSideBar } },
+    });
+  };
 
   return (
     <div>
-      <Box sx={{textAlign: `right`, marginBottom: `30px`}}>
-        <DownloadButton rows={rows} columns={columns} filename="subscription.csv"/>
+      <Box sx={{ textAlign: `right`, marginBottom: `30px` }}>
+        <DownloadButton
+          rows={rows}
+          columns={columns}
+          filename="subscription.csv"
+        />
       </Box>
       <Box>
-        <SearchBar value={searched} onChange={onChange}/>
-        <Paper sx={{boxShadow: "none"}}>
+        <SearchBar value={searched} onChange={onChange} />
+        <Paper sx={{ boxShadow: "none" }}>
           <TableContainer
             className="subscription-table-container"
-            style={{marginTop: "30px"}}
+            style={{ marginTop: "30px" }}
           >
-            <TableStyled
-              stickyHeader
-              aria-label="sticky table"
-            >
+            <TableStyled stickyHeader aria-label="sticky table">
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
@@ -154,32 +170,41 @@ const SubscriptionPage = () => {
               />
 
               <TableBody>
-
                 {stableSort(rows, getComparator(order, orderBy)).map(
                   (row, index) => {
                     return (
-                      <TableRow hover tabIndex={-1} key={row.id} onClick={() => clickableRow(row)}>
-                        <TableCell
-                          className="table-col-1"
-                        >
-                          <span className="table-tag">NCE</span>{" "}
-                          {row.subscription}
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={row.id}
+                        onClick={() => clickableRow(row)}
+                      >
+                        <TableCell className="table-col-1">
+                          {row.is_nce && <span className="table-tag">NCE</span>}
+                          {row.offer_name}
                         </TableCell>
-                        <TableCell>{row.count}</TableCell>
-                        <TableCell>{row.renewsOn}</TableCell>
-                        <TableCell>{row.terms}</TableCell>
-                        <TableCell>{row.autoRenewel}</TableCell>
-                        <TableCell
-                          className={`ms-${
-                            row.status === "Active" ? "active" : "suspend"
-                          } `}
-                        >
+                        <TableCell>{row.quantity}</TableCell>
+
+                        <TableCell>{row.commitment_end_date}</TableCell>
+                        <TableCell>{row.term_duration}</TableCell>
+
+                        <TableCell>
+                          {row.will_auto_renew ? "Yes" : "No"}
+                        </TableCell>
+                        <TableCell className={`ms-${row.status} `}>
                           {row.status}
                         </TableCell>
                         <TableCell className="action-btn">
-                          <Link to={{pathname: `detail/${row.id}`}}
-                                state={{...row, ...{activeSideBar: location.state?.activeSideBar}}}>
-                            {row.action}
+                          <Link
+                            to={{ pathname: `detail/${row.id}` }}
+                            state={{
+                              ...row,
+                              ...{
+                                activeSideBar: location.state?.activeSideBar,
+                              },
+                            }}
+                          >
+                            View Details
                           </Link>
                         </TableCell>
                       </TableRow>
