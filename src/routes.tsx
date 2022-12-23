@@ -18,10 +18,9 @@ const Routes = () => {
       <Router>
         <Route path="*" element={<NotfoundPage />} />
         <Route path="/start" element={<Start app="portal" />} />
-        <Route path="/login" element={<LoginPage userType="client" />} />
+        <Route path="/" element={<LoginPage userType="client" />} />
 
         <Route path="/" element={<Layout />}>
-          <Route path="" element={<SubscriptionPage />} />
           <Route path="subscription" element={<SubscriptionPage />} />
           <Route
             path="subscription/detail/:id"
