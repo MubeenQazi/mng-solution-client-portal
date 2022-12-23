@@ -4,118 +4,128 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
-
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import SearchBar from "../../submodule/components/SearchBar/SearchBar";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-
+import {
+  stableSort,
+  getComparator,
+  Order,
+} from "../../submodule/components/Tables/Table";
+import { TableStyled } from "../../submodule/components/Tables/TableStyles";
+import EnhancedTableHead from "../../submodule/components/Tables/TableHead";
 import "./Subscription.scss";
+import { SubscriptionData } from "../../submodule/components/Tables/TableData";
 import axios from "axios";
 
-const defaultValues: any = [
+interface Data {
+  id: any;
+  offer_name: any;
+  quantity: any;
+  commitment_end_date: any;
+  term_duration: any;
+  will_auto_renew: any;
+  status: any;
+  is_nce: any;
+  // action: string;
+}
+
+const originalRows: Data[] = SubscriptionData;
+
+interface HeadCell {
+  disablePadding: boolean;
+  id: keyof Data;
+  label: string;
+  numeric: boolean;
+}
+
+const headCells: readonly HeadCell[] = [
   {
-    id: "924671ba-eab9-45d7-95ed-dbd9477f182b",
-    offer_id: "DG7GMGF0FKZV:0003:DG7GMGF0DQLM",
-    offer_name: "SQL Server Enterprise - 2 Core License Pack - 3 year",
-    offer_description:
-      "Microsoft 365 E3 combines best-in-class productivity apps with core security and compliance capabilities.",
-    quantity: 1,
-    creation_date: "2021-10-15T21:28:19.3058617Z",
-    effective_start_date: "2021-10-15T21:28:18.4786844Z",
-    commitment_end_date: "2024-10-14T00:00:00Z",
-    cancellation_allowed_until_date: "2021-11-14T23:59:00Z",
-    billing_cycle: "annual",
-    billing_type: "license",
-    term_duration: "P3Y",
-    will_auto_renew: true,
-    is_trial: false,
-    is_nce: true,
-    status: "active",
+    id: "offer_name",
+    numeric: false,
+    disablePadding: true,
+    label: "Subscription",
   },
+  {
+    id: "quantity",
+    numeric: false,
+    disablePadding: true,
+    label: "Quantity",
+  },
+  {
+    id: "commitment_end_date",
+    numeric: false,
+    disablePadding: true,
+    label: "Renews On",
+  },
+  {
+    id: "term_duration",
+    numeric: false,
+    disablePadding: true,
+    label: "Terms",
+  },
+  {
+    id: "will_auto_renew",
+    numeric: false,
+    disablePadding: true,
+    label: "Auto Renewel",
+  },
+  {
+    id: "status",
+    numeric: false,
+    disablePadding: true,
+    label: "Status",
+  },
+  // {
+  //   id: "action",
+  //   numeric: false,
+  //   disablePadding: true,
+  //   label: "Action",
+  // },
 ];
+
 const SubscriptionPage = () => {
-  const [rows, setRows] = useState(defaultValues);
+  const [rows, setRows] = useState<Data[]>(originalRows);
   const [searched, setSearched] = useState<string>("");
+  const [order, setOrder] = React.useState<Order>("desc");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("offer_name");
   const location = useLocation();
   const navigate = useNavigate();
 
-  const columns: GridColDef[] = [
-    {
-      field: "offer_name",
-      headerName: "Offer Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "quantity",
-      headerName: "Quantity",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "commitment_end_date",
-      headerName: "Renew On",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "term_duration",
-      headerName: "Terms",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "will_auto_renew",
-      headerName: "Auto Renewal",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      sortable: false,
-      width: 160,
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      sortable: false,
-      width: 160,
-      renderCell: (params) => (
-        <Link
-          to={{ pathname: `detail/${params.row.id}` }}
-          state={{
-            ...params.row,
-          }}
-        >
-          View Details
-        </Link>
-      ),
-    },
-  ];
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://api.msolcsptest.com/portal/v1/subscriptions")
-  //     .then(function (response) {
-  //       if (response.data) {
-  //         setRows(response.data);
-  //       }
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("https://api.msolcsptest.com/portal/v1/subscriptions")
+      .then(function (response) {
+        if (response.data) {
+          setRows(response.data);
+        }
+      });
+  }, []);
 
   const requestSearch = (searchedVal: string) => {
-    const filteredRows = rows.filter((row: any) => {
+    const filteredRows = originalRows.filter((row) => {
       return row.offer_name.toLowerCase().includes(searchedVal.toLowerCase());
     });
     setRows(filteredRows);
+  };
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => {
+    const isAsc = orderBy === property && order === "desc";
+
+    setOrder(isAsc ? "asc" : "desc");
+    setOrderBy(property);
   };
 
   const onChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSearched(event.target.value as string);
     requestSearch(event.target.value as string);
   };
-  const downloadColumns = [
+  const columns = [
     "ID",
     "Offer Name",
     "Quantity",
@@ -139,23 +149,72 @@ const SubscriptionPage = () => {
       <Box sx={{ textAlign: `right`, marginBottom: `30px` }}>
         <DownloadButton
           rows={rows}
-          columns={downloadColumns}
+          columns={columns}
           filename="subscription.csv"
         />
       </Box>
       <Box>
         <SearchBar value={searched} onChange={onChange} />
-        <Box>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableSelectionOnClick={true}
-            autoHeight={true}
-            autoPageSize={true}
-            hideFooter={true}
-            pageSize={5}
-          />
-        </Box>
+        <Paper sx={{ boxShadow: "none" }}>
+          <TableContainer
+            className="subscription-table-container"
+            style={{ marginTop: "30px" }}
+          >
+            <TableStyled stickyHeader aria-label="sticky table">
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+                headCells={headCells}
+              />
+
+              <TableBody>
+                {stableSort(rows, getComparator(order, orderBy)).map(
+                  (row, index) => {
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={row.id}
+                        onClick={() => clickableRow(row)}
+                      >
+                        <TableCell className="table-col-1">
+                          {row.is_nce && <span className="table-tag">NCE</span>}
+                          {row.offer_name}
+                        </TableCell>
+                        <TableCell>{row.quantity}</TableCell>
+
+                        <TableCell>{row.commitment_end_date}</TableCell>
+                        <TableCell>{row.term_duration}</TableCell>
+
+                        <TableCell>
+                          {row.will_auto_renew ? "Yes" : "No"}
+                        </TableCell>
+                        <TableCell className={`ms-${row.status} `}>
+                          {row.status}
+                        </TableCell>
+                        <TableCell className="action-btn">
+                          <Link
+                            to={{ pathname: `detail/${row.id}` }}
+                            state={{
+                              ...row,
+                              ...{
+                                activeSideBar: location.state?.activeSideBar,
+                              },
+                            }}
+                          >
+                            View Details
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  }
+                )}
+              </TableBody>
+            </TableStyled>
+          </TableContainer>
+        </Paper>
       </Box>
     </div>
   );
