@@ -30,7 +30,18 @@ const OrderDetailPage = () => {
   const location = useLocation();
   const lineItems = location.state.line_items;
 
-  const columns = ["ID", "Date", "Count", "Item", "Price", "Co Term", "Status"];
+  const columns = [
+    "ID",
+    "Offer ID",
+    "Position",
+    "Offer Name",
+    "Quantity",
+    "Subtotal Price",
+    "Billing Cycle",
+    "Billing Type",
+    "Terms Duration",
+    "Offer Sku",
+  ];
   return (
     <div>
       <Box

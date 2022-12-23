@@ -127,15 +127,21 @@ const SubscriptionPage = () => {
   };
   const columns = [
     "ID",
+    "Offer ID",
     "Offer Name",
+    "Offer Description",
     "Quantity",
-    "Renews On",
-    "Terms",
-    "Auto Renewel",
+    "Creation Date",
+    "Effective Start Date",
+    "Commitment End Date",
+    "Cancellation Date",
+    "Billing Cycle",
+    "Billing Type",
+    "Terms Duration",
+    "Auto Renewal",
+    "Is Trial",
+    "Is NCE",
     "Status",
-    "Type",
-    "Description",
-    "List",
   ];
 
   const clickableRow = (row: any) => {

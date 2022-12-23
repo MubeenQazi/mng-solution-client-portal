@@ -30,7 +30,7 @@ const SubscriptionDetailPage = () => {
   subscriptionDetailArr.push(subscriptionDetail);
 
   const [value, setValue] = React.useState(
-    location.state != null ? location.state.autoRenewel : "Yes"
+    location.state != null ? location.state.will_auto_renew : "false"
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,15 +39,21 @@ const SubscriptionDetailPage = () => {
 
   const columns = [
     "ID",
-    "Subscription",
-    "Count",
-    "Renews On",
-    "Terms",
-    "Auto Renewel",
+    "Offer ID",
+    "Offer Name",
+    "Offer Description",
+    "Quantity",
+    "Creation Date",
+    "Effective Start Date",
+    "Commitment End Date",
+    "Cancellation Date",
+    "Billing Cycle",
+    "Billing Type",
+    "Terms Duration",
+    "Auto Renewal",
+    "Is Trial",
+    "Is NCE",
     "Status",
-    "Type",
-    "Description",
-    "List",
   ];
 
   return (

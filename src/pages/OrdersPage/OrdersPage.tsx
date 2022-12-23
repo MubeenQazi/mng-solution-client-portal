@@ -113,17 +113,14 @@ const OrdersPage = () => {
 
   const columns = [
     "ID",
-    "Date",
-    "Count",
-    "Item",
-    "Price",
-    "Co-Term",
+    "Customer ID",
+    "Data",
+    "Line Items",
+    "Currency Code",
+    "Billing Cycle",
+    "Monthly Price",
+    "Total Price",
     "Status",
-    "Line Item",
-    "Billing Plan",
-    "Term Duration",
-    "Monthly Payment",
-    "Order Total",
   ];
   const clickableRow = (row: any) => {
     navigate(`detail/${row.id}`, {
