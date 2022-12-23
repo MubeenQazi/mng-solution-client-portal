@@ -21,6 +21,9 @@ import "./Login.scss";
 const { logo, loginPopupImage } = AppImages;
 
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialog-paperWidthSm": {
+    minWidth: "300px",
+  },
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
@@ -132,7 +135,7 @@ export function LogoutPopup() {
         <Typography variant="h4" className="popup-heading">
           Successfully Signed-Out
         </Typography>
-        <Link to={"/login"}>
+        <Link to={"/"}>
           <MSButton text="Ok" />
         </Link>
       </DialogContent>
@@ -162,7 +165,7 @@ export function ErrorPopup({ errorMessage }: { errorMessage: string | null }) {
         <Typography variant="h4" className="popup-heading">
           {errorMessage}
         </Typography>
-        <Link to={"/login"}>
+        <Link to={"/"}>
           <MSButton text="Ok" />
         </Link>
       </DialogContent>
