@@ -28,9 +28,20 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const OrderDetailPage = () => {
   const location = useLocation();
-  const lineItems = location.state.lineItem;
+  const lineItems = location.state.line_items;
 
-  const columns = ["ID", "Date", "Count", "Item", "Price", "Co Term", "Status"];
+  const columns = [
+    "ID",
+    "Offer ID",
+    "Position",
+    "Offer Name",
+    "Quantity",
+    "Subtotal Price",
+    "Billing Cycle",
+    "Billing Type",
+    "Terms Duration",
+    "Offer Sku",
+  ];
   return (
     <div>
       <Box
@@ -40,17 +51,17 @@ const OrderDetailPage = () => {
         }}
       >
         <h1>
-          {location.state.item}{" "}
+          Order Detail
           <span
             className={
-              location.state.status == "Active" ? "ms-active" : "ms-suspend"
+              location.state.status === "Active" ? "ms-active" : "ms-suspend"
             }
           >
             ({location.state.status})
           </span>
         </h1>
         <DownloadButton
-          rows={location.state.lineItem}
+          rows={location.state.line_items}
           columns={columns}
           filename="orderDetail.csv"
         />
@@ -59,7 +70,7 @@ const OrderDetailPage = () => {
         <div className="panel-light">
           <Box className="d-md-flex justify-content-md-between align-items-md-center">
             <h2>Order ID: {location.state.id}</h2>
-            <h4>{location.state.date}</h4>
+            <h4>{location.state.creation_date}</h4>
           </Box>
           <TableContainer className="order-table-container table-order-detail">
             <Table
@@ -118,11 +129,15 @@ const OrderDetailPage = () => {
                     key={lineItem.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell>{lineItem.item}</TableCell>
+                    <TableCell>{lineItem.offer_name}</TableCell>
                     <TableCell align="center">{lineItem.quantity}</TableCell>
-                    <TableCell align="center">{lineItem.unitPrice}</TableCell>
-                    <TableCell align="center">{lineItem.term}</TableCell>
-                    <TableCell> {lineItem.sku} </TableCell>
+                    <TableCell align="center">
+                      {lineItem.subtotal_price}
+                    </TableCell>
+                    <TableCell align="center">
+                      {lineItem.term_duration}
+                    </TableCell>
+                    <TableCell> {lineItem.offer_sku} </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -134,7 +149,9 @@ const OrderDetailPage = () => {
               <Grid item xs={12} md={6}>
                 <Item className="d-md-flex align-items-md-center">
                   <h3 className="ms-meta-title">Billing Plan: </h3>
-                  <h3 className="ms-meta-data">{location.state.billingPlan}</h3>
+                  <h3 className="ms-meta-data">
+                    {location.state.billing_cycle}
+                  </h3>
                 </Item>
               </Grid>
               <Grid item xs={12} md={6}>
@@ -142,16 +159,16 @@ const OrderDetailPage = () => {
                   <h3 className="ms-meta-title">Monthly Payment: </h3>
                   <h3 className="ms-meta-data">
                     {" "}
-                    ${location.state.monthlyPayment}{" "}
+                    ${location.state.monthly_price}{" "}
                   </h3>
                 </Item>
               </Grid>
 
               <Grid item xs={12} md={6}>
                 <Item className="d-md-flex align-items-md-center">
-                  <h3 className="ms-meta-title">Term Duration: </h3>
+                  <h3 className="ms-meta-title">Currency: </h3>
                   <h3 className="ms-meta-data">
-                    {location.state.termDuration}
+                    {location.state.currency_code}
                   </h3>
                 </Item>
               </Grid>
@@ -159,7 +176,7 @@ const OrderDetailPage = () => {
                 <Item className="d-md-flex align-items-md-center justify-content-lg-end">
                   <h3 className="ms-meta-title">Order Total: </h3>
                   <h3 className="ms-meta-data">
-                    ${location.state.orderTotal}{" "}
+                    ${location.state.total_price}{" "}
                   </h3>
                 </Item>
               </Grid>
