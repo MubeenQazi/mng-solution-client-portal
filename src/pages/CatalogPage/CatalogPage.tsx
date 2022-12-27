@@ -14,6 +14,7 @@ import SearchBar from "../../submodule/components/SearchBar/SearchBar";
 import { BuySubsciptionCustomizedDialog } from "../../components/Dialog/Dialog";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import AlertMessage from "../../submodule/components/AlertMessage/AlertMessage";
 import "./Catalog.scss";
 import axios from "axios";
 
@@ -65,17 +66,48 @@ const defaultValues: any = [
 const CatalogPage = () => {
   const [option, setOption] = useState("monthly");
   const [accordians, setAccordians] = useState(defaultValues);
+
+  const [message, setMessage] = useState<string>("");
+  const [alert, setAlert] = useState<boolean>(false);
+
   const handleChange = (event: MouseEvent<HTMLElement>, newColor: string) => {
     setOption(newColor);
   };
-  const [payment, setPayment] = useState("monthly");
   const [isDisabled, setIsDisabled] = useState(true);
   const [checked, setChecked] = useState(false);
-  const [value, setValue] = useState<number>(0);
+
+  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [termDuration, setTermDuration] = useState("P3Y");
+  const [sku, setSku] = useState("1");
+  const [quantity, setQuantity] = useState<number>(0);
+
+  const handleClick = (id: number) => {
+    axios
+      .post(`${process.env.REACT_APP_CLIENT_API_BASE}/order`, {
+        id,
+        quantity,
+        billingCycle,
+        termDuration,
+        sku,
+      })
+      .then((response) => {
+        setMessage("success");
+      })
+      .catch(() => {
+        setMessage("fail");
+      });
+    setAlert(true);
+  };
 
   useEffect(() => {
+    // console.log(process.env);
+    // when the component is mounted, the alert is displayed for 5 seconds
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+
     axios
-      .get("https://api.msolcsptest.com/portal/v1/offers")
+      .get(`${process.env.REACT_APP_CLIENT_API_BASE}/offers`)
       .then(function (response) {
         if (response.data) {
           setAccordians(response.data);
@@ -86,13 +118,13 @@ const CatalogPage = () => {
   const min = 0;
   const max = 100;
   const IncrementItem = () => {
-    setValue(value + 1);
+    setQuantity(quantity + 1);
   };
   const DecreaseItem = () => {
-    if (value < 1) {
-      setValue(0);
+    if (quantity < 1) {
+      setQuantity(0);
     } else {
-      setValue(value - 1);
+      setQuantity(quantity - 1);
     }
   };
 
@@ -105,20 +137,20 @@ const CatalogPage = () => {
     return canBeSubmitted();
   };
 
-  const paymenthandleChange = (event: SelectChangeEvent) => {
-    setPayment(event.target.value as string);
+  const billinghandleChange = (event: SelectChangeEvent) => {
+    setBillingCycle(event.target.value as string);
   };
 
-  const Modal = () => {
+  const Modal = (id: number, name: string, msrp_price: string | number) => {
     return (
       <>
         <div>
           <form>
             <div className="modal-head">
-              <Typography className="popup-head">
-                <h3>Microsoft Office 365 E5</h3>
-                <h5>MSRP: $75.00 / month</h5>
-              </Typography>
+              <div className="popup-head">
+                <h3>{name}</h3>
+                <h5>MSRP: ${msrp_price} / month</h5>
+              </div>
             </div>
             <div className="popup-main">
               <Grid container spacing={2}>
@@ -157,8 +189,8 @@ const CatalogPage = () => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={payment}
-                      onChange={paymenthandleChange}
+                      value={billingCycle}
+                      onChange={billinghandleChange}
                       // defaultValue="monthly"
                       className="payment-select"
                     >
@@ -192,14 +224,14 @@ const CatalogPage = () => {
                         id="outlined-basic"
                         className="quantity-select"
                         inputProps={{ min, max }}
-                        value={value}
+                        value={quantity}
                         onChange={(e) => {
                           var value = parseInt(e.target.value, 10);
 
                           if (value > max) value = max;
                           if (value < min) value = min;
 
-                          setValue(value);
+                          setQuantity(value);
                         }}
                       />
                     </FormControl>
@@ -214,7 +246,7 @@ const CatalogPage = () => {
               </Grid>
             </div>
             <Typography className="price-per-month">
-              {`Your price: $ ${75.0 * value} / month`}
+              {`Your price: $ ${75.0 * quantity} / month`}
             </Typography>
 
             <div className="modal-item">
@@ -233,6 +265,7 @@ const CatalogPage = () => {
                     id="add-btn"
                     className="submit-btn"
                     disabled={isDisabled}
+                    onClick={() => handleClick(id)}
                   >
                     Add
                   </Button>
@@ -248,6 +281,12 @@ const CatalogPage = () => {
   return (
     <div>
       <SearchBar />
+
+      {message == "success"
+        ? AlertMessage(alert, "Order Created Succefully", "success")
+        : message == "fail" &&
+          AlertMessage(alert, "Order Creation Failed", "error")}
+
       <div className="catalog-panel">
         <div className="panel-light">
           {accordians.map((accordian: any) => {
@@ -310,7 +349,11 @@ const CatalogPage = () => {
                           <div>
                             <BuySubsciptionCustomizedDialog
                               dialogText="Buy Subscriptions"
-                              popupContent={Modal()}
+                              popupContent={Modal(
+                                accordian.id,
+                                accordian.name,
+                                accordian.msrp_price
+                              )}
                             />
                             <Typography className="accordian-last-para">
                               annual commitment required

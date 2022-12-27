@@ -83,7 +83,7 @@ const OrdersPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.msolcsptest.com/portal/v1/orders")
+      .get(`${process.env.REACT_APP_CLIENT_API_BASE}/orders`)
       .then(function (response) {
         if (response.data) {
           setRows(response.data);

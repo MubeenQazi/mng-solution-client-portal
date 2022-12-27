@@ -79,12 +79,6 @@ const headCells: readonly HeadCell[] = [
     disablePadding: true,
     label: "Status",
   },
-  // {
-  //   id: "action",
-  //   numeric: false,
-  //   disablePadding: true,
-  //   label: "Action",
-  // },
 ];
 
 const SubscriptionPage = () => {
@@ -97,7 +91,7 @@ const SubscriptionPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.msolcsptest.com/portal/v1/subscriptions")
+      .get(`${process.env.REACT_APP_CLIENT_API_BASE}/subscriptions`)
       .then(function (response) {
         if (response.data) {
           setRows(response.data);

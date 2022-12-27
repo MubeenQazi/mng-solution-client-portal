@@ -22,7 +22,7 @@ const Login = (props: any) => {
 
   useEffect(() => {
     axios
-      .get("https://api.msolcsptest.com/sso/v1/signin", {
+      .get(`${process.env.REACT_APP_API_BASE}/sso/v1/signin`, {
         params: { app: "portal" },
       })
       .then(function (response) {
