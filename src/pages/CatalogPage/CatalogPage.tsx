@@ -2,22 +2,24 @@
 
 import React, { useState, MouseEvent, useEffect } from "react";
 import { styled } from "@mui/system";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+import {
+  Box,
+  Paper,
+  Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import SearchBar from "../../submodule/components/SearchBar/SearchBar";
 import { BuySubsciptionCustomizedDialog } from "../../components/Dialog/Dialog";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import AlertMessage from "../../submodule/components/AlertMessage/AlertMessage";
 import "./Catalog.scss";
-import axios from "axios";
-
+import { OfferGetApi, OrderPostApi } from "../../api/CatalogApi";
+import { defaultOfferValues } from "../../shared/constants/constants";
 import {
   Button,
   Checkbox,
@@ -48,24 +50,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const defaultValues: any = [
-  {
-    id: 1,
-    name: "Microsoft 365 E3",
-    description:
-      "Microsoft 365 E3 combines best-in-class productivity apps with core security and compliance capabilities.",
-    msrp_price: 100,
-    discount_price: 90,
-    billing_term_options: "p1m, p1ym, p1ya",
-    has_auto_renew: true,
-    is_nce: true,
-    status: "active",
-  },
-];
-
 const CatalogPage = () => {
+  const [accordians, setAccordians] = useState(defaultOfferValues);
   const [option, setOption] = useState("monthly");
-  const [accordians, setAccordians] = useState(defaultValues);
 
   const [message, setMessage] = useState<string>("");
   const [alert, setAlert] = useState<boolean>(false);
@@ -80,30 +67,26 @@ const CatalogPage = () => {
   const [sku] = useState("1");
   const [quantity, setQuantity] = useState<number>(1);
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: string) => {
     let cycle = billingCycle === "monthly" ? "M" : "A";
     let payment = option === "annually" ? "Y" : "";
     let termDuration = "P" + quantity + cycle + payment;
-    axios
-      .post(`${process.env.REACT_APP_CLIENT_API_BASE}/order`, {
-        id,
-        quantity,
-        billingCycle,
-        termDuration,
-        sku,
-      })
-      .then((response) => {
-        setMessage("success");
-        setAlert(true);
 
-        setOption("monthly");
-        setBillingCycle("monthly");
-        setQuantity(1);
-      })
-      .catch(() => {
-        setMessage("fail");
-        setAlert(true);
-      });
+    const response =
+      OrderPostApi(id, quantity, billingCycle, termDuration, sku) === undefined
+        ? false
+        : OrderPostApi(id, quantity, billingCycle, termDuration, sku);
+    if (response) {
+      setMessage("success");
+      setAlert(true);
+
+      setOption("monthly");
+      setBillingCycle("monthly");
+      setQuantity(1);
+    } else {
+      setMessage("fail");
+      setAlert(true);
+    }
   };
 
   useEffect(() => {
@@ -111,15 +94,10 @@ const CatalogPage = () => {
     // when the component is mounted, the alert is displayed for 5 seconds
     setTimeout(() => {
       setAlert(false);
+      setMessage("");
     }, 5000);
 
-    axios
-      .get(`${process.env.REACT_APP_CLIENT_API_BASE}/offers`)
-      .then(function (response) {
-        if (response.data) {
-          setAccordians(response.data);
-        }
-      });
+    // setAccordians(OfferGetApi());
   }, []);
 
   const min = 1;
@@ -148,7 +126,7 @@ const CatalogPage = () => {
     setBillingCycle(event.target.value as string);
   };
 
-  const Modal = (id: number, name: string, msrp_price: string | number) => {
+  const Modal = (id: string, name: string, msrp_price: string | number) => {
     return (
       <>
         <div>
@@ -296,7 +274,7 @@ const CatalogPage = () => {
 
       <div className="catalog-panel">
         <div className="panel-light">
-          {accordians.map((accordian: any) => {
+          {accordians?.map((accordian: any) => {
             return (
               <Accordion className="accordian" key={accordian.id}>
                 <AccordionSummary

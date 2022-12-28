@@ -1,20 +1,23 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import MSButton from "../../submodule/components/MSButton/MSButton";
+import MsButton from "../../submodule/components/MSButton/MSButton";
 import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
 import AlertMessage from "../../submodule/components/AlertMessage/AlertMessage";
 import { styled } from "@mui/system";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  Box,
+  Paper,
+  Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  ListItem,
+} from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ListItem from "@mui/material/ListItem";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
+import { SubscriptionPostApi } from "../../api/SubscriptionApi";
+import { DOWNLOAD_COLUMNS_SUBSCRIPTION } from "../../components/TableColumns/ColumnResponsive";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -36,29 +39,26 @@ const SubscriptionDetailPage = () => {
 
   const id = location.state.id;
   const [value, setValue] = React.useState(
-    location.state != null ? location.state.will_auto_renew : "false"
+    location.state != null ? location.state.will_auto_renew : false
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    axios
-      .post(`${process.env.REACT_APP_CLIENT_API_BASE}/subscriptions/${id}`, {
-        id,
-        value,
-      })
-      .then((response) => {
-        setMessage("success");
+    const response =
+      SubscriptionPostApi(id, value) === undefined
+        ? false
+        : SubscriptionPostApi(id, value);
+    if (response) {
+      setMessage("success");
 
-        setAlert(true);
-        setValue((event.target as HTMLInputElement).value);
+      setAlert(true);
+      setValue((event.target as HTMLInputElement).value);
 
-        location.state.will_auto_renew = value;
-      })
-      .catch(() => {
-        setMessage("fail");
-
-        setAlert(true);
-        setValue((event.target as HTMLInputElement).value);
-      });
+      location.state.will_auto_renew = value;
+    } else {
+      setMessage("fail");
+      setAlert(true);
+      setValue((event.target as HTMLInputElement).value);
+    }
   };
 
   useEffect(() => {
@@ -68,25 +68,6 @@ const SubscriptionDetailPage = () => {
       setMessage("");
     }, 5000);
   }, []);
-
-  const columns = [
-    "ID",
-    "Offer ID",
-    "Offer Name",
-    "Offer Description",
-    "Quantity",
-    "Creation Date",
-    "Effective Start Date",
-    "Commitment End Date",
-    "Cancellation Date",
-    "Billing Cycle",
-    "Billing Type",
-    "Terms Duration",
-    "Auto Renewal",
-    "Is Trial",
-    "Is NCE",
-    "Status",
-  ];
 
   return (
     <div>
@@ -112,7 +93,7 @@ const SubscriptionDetailPage = () => {
         </h1>
         <DownloadButton
           rows={subscriptionDetailArr}
-          columns={columns}
+          columns={DOWNLOAD_COLUMNS_SUBSCRIPTION}
           filename="subscriptionDetail.csv"
         />
       </Box>
@@ -142,12 +123,12 @@ const SubscriptionDetailPage = () => {
                 name="row-radio-buttons-group"
               >
                 <FormControlLabel
-                  value="true"
+                  value={true}
                   control={<Radio />}
                   label="Enable"
                 />
                 <FormControlLabel
-                  value="false"
+                  value={false}
                   control={<Radio />}
                   label="Disable"
                 />
@@ -176,7 +157,7 @@ const SubscriptionDetailPage = () => {
             to={"/subscription"}
             state={{ activeSideBar: location.state?.activeSideBar }}
           >
-            <MSButton
+            <MsButton
               text="Back"
               backgroundColor="#9BA4AF"
               icon={<ArrowBackIosIcon />}

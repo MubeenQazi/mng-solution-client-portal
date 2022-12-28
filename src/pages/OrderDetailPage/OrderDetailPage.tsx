@@ -2,20 +2,24 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import Box from "@mui/material/Box";
-import MSButton from "../../submodule/components/MSButton/MSButton";
+import MsButton from "../../submodule/components/MSButton/MSButton";
 import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
 import { styled } from "@mui/system";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ListItem from "@mui/material/ListItem";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import { DOWNLOAD_COLUMNS_ORDER } from "../../components/TableColumns/ColumnResponsive";
+import {
+  Box,
+  Paper,
+  Grid,
+  ListItem,
+  Table,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import "../OrdersPage/Orders.scss";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -29,19 +33,6 @@ const Item = styled(Paper)(({ theme }) => ({
 const OrderDetailPage = () => {
   const location = useLocation();
   const lineItems = location.state.line_items;
-
-  const columns = [
-    "ID",
-    "Offer ID",
-    "Position",
-    "Offer Name",
-    "Quantity",
-    "Subtotal Price",
-    "Billing Cycle",
-    "Billing Type",
-    "Terms Duration",
-    "Offer Sku",
-  ];
   return (
     <div>
       <Box
@@ -62,7 +53,7 @@ const OrderDetailPage = () => {
         </h1>
         <DownloadButton
           rows={location.state.line_items}
-          columns={columns}
+          columns={DOWNLOAD_COLUMNS_ORDER}
           filename="orderDetail.csv"
         />
       </Box>
@@ -190,7 +181,7 @@ const OrderDetailPage = () => {
             to={"/dashboard/order"}
             state={{ activeSideBar: location.state?.activeSideBar }}
           >
-            <MSButton
+            <MsButton
               text="Back"
               backgroundColor="#9BA4AF"
               icon={<ArrowBackIosIcon />}

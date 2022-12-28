@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
@@ -7,9 +9,8 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
-import MSButton from "../../submodule/components/MSButton/MSButton";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DialogActions from "@mui/material/DialogActions";
 
 import { Link } from "react-router-dom";
@@ -91,41 +92,46 @@ export function CustomizedDialogs(validate: any) {
           id="customized-dialog-title"
           onClose={handleClose}
         />
-        <form style={{ minWidth: 300, textAlign: 'center' }}>
+        <form style={{ minWidth: 300, textAlign: "center" }}>
           <DialogContent className="popup-content">
             <div className="modal-head d-flex align-items-center justify-content-center">
-              {
-                validate.validate ?
-                  <CheckCircleOutlineIcon className="success icon" />
-                  :
-                  <HighlightOffIcon  className="danger icon" />
-              }
+              {validate.validate ? (
+                <CheckCircleOutlineIcon className="success icon" />
+              ) : (
+                <HighlightOffIcon className="danger icon" />
+              )}
             </div>
             <div className="modal-body">
-              <h1>{validate.validate ? 'Success' : 'Error'}</h1>
-              <p>{validate.validate ? 'You have successfully submitted the quotation request' : 'Please fill out all of the mandatory fields.'}</p>
+              <h1>{validate.validate ? "Success" : "Error"}</h1>
+              <p>
+                {validate.validate
+                  ? "You have successfully submitted the quotation request"
+                  : "Please fill out all of the mandatory fields."}
+              </p>
             </div>
 
             <div className="modal-item">
-
-              {validate.validate ?
+              {/* {validate.validate ?
                 <Link to={'/'}>
                   <MSButton text="Ok" />
                 </Link>
                 :
                 <MSButton text="Ok" clickAction={handleClose} />
-              }
+              } */}
             </div>
           </DialogContent>
-
         </form>
       </BootstrapDialog>
     </div>
   );
 }
 
-
-export function BuySubsciptionCustomizedDialog({ dialogText, popupContent, popupAction, type }: any) {
+export function BuySubsciptionCustomizedDialog({
+  dialogText,
+  popupContent,
+  popupAction,
+  type,
+}: any) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
