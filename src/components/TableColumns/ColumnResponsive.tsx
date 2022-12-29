@@ -195,4 +195,75 @@ export const ORDER_COLUMNS = [
  * ORDERS COLUMNS END
  ********************************************/
 
+/*********************************************
+ * ORDERS DETAIL COLUMNS START
+ ********************************************/
+export const MOBILE_COLUMNS_ORDER_DETAIL = {
+  offer_name: true,
+  quantity: false,
+  subtotal_price: false,
+  term_duration: true,
+  offer_sku: false,
+};
+
+export const TABLET_COLUMNS_ORDER_DETAIL = {
+  offer_name: true,
+  quantity: false,
+  subtotal_price: true,
+  term_duration: true,
+  offer_sku: false,
+};
+
+export const DESKTOP_COLUMNS_ORDER_DETAIL = {
+  offer_name: true,
+  quantity: true,
+  subtotal_price: true,
+  term_duration: true,
+  offer_sku: true,
+};
+
+export const ORDER_DETAIL_COLUMNS = [
+  {
+    field: "offer_name",
+    headerName: "Item",
+    flex: 1,
+    sortable: false,
+  },
+  {
+    field: "quantity",
+    headerName: "Quantity",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+  },
+  {
+    field: "subtotal_price",
+    headerName: "Unit Price",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+  },
+  {
+    field: "term_duration",
+    headerName: "Terms",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+  },
+  {
+    field: "offer_sku",
+    headerName: "Sku",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+  },
+];
+
+/*********************************************
+ * ORDERS DETAIL COLUMNS END
+ ********************************************/
 /** @format */

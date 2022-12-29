@@ -6,20 +6,16 @@ import MsButton from "../../submodule/components/MSButton/MSButton";
 import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
 import { styled } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { DOWNLOAD_COLUMNS_ORDER } from "../../components/TableColumns/ColumnResponsive";
 import {
-  Box,
-  Paper,
-  Grid,
-  ListItem,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+  DOWNLOAD_COLUMNS_ORDER,
+  ORDER_DETAIL_COLUMNS,
+  MOBILE_COLUMNS_ORDER_DETAIL,
+  TABLET_COLUMNS_ORDER_DETAIL,
+  DESKTOP_COLUMNS_ORDER_DETAIL,
+} from "../../components/TableColumns/ColumnResponsive";
+import { Box, Paper, Grid, ListItem } from "@mui/material";
+
+import TableGrid from "../../submodule/components/Tables/TableGrid";
 import "../OrdersPage/Orders.scss";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -33,6 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const OrderDetailPage = () => {
   const location = useLocation();
   const lineItems = location.state.line_items;
+
   return (
     <div>
       <Box
@@ -63,77 +60,15 @@ const OrderDetailPage = () => {
             <h2>Order ID: {location.state.id}</h2>
             <h4>{location.state.creation_date}</h4>
           </Box>
-          <TableContainer className="order-table-container table-order-detail">
-            <Table
-              sx={{
-                marginBottom: `50px`,
-                [`& .${tableCellClasses.root}`]: {
-                  borderBottom: "none",
-                },
-                "& .MuiTableHead-root": {
-                  backgroundColor: "tranparent",
-                  "& .MuiTableCell-root": {
-                    font: "normal normal 500 24px/36px Raleway",
-                    letterSpacing: "0.32px",
-                  },
-                },
-                "& .MuiTableBody-root": {
-                  "& .MuiTableCell-root": {
-                    font: "normal normal normal 24px/36px Raleway",
-                    letterSpacing: "0px",
-                  },
-                },
-              }}
-              aria-label="simple table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ textDecoration: "underline" }}>
-                    Item
-                  </TableCell>
-                  <TableCell
-                    sx={{ textDecoration: "underline" }}
-                    align="center"
-                  >
-                    Quantity
-                  </TableCell>
-                  <TableCell
-                    sx={{ textDecoration: "underline" }}
-                    align="center"
-                  >
-                    Unit Price
-                  </TableCell>
-                  <TableCell
-                    sx={{ textDecoration: "underline" }}
-                    align="center"
-                  >
-                    Term
-                  </TableCell>
-                  <TableCell sx={{ textDecoration: "underline" }}>
-                    SKU
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {lineItems.map((lineItem: any) => (
-                  <TableRow
-                    key={lineItem.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>{lineItem.offer_name}</TableCell>
-                    <TableCell align="center">{lineItem.quantity}</TableCell>
-                    <TableCell align="center">
-                      {lineItem.subtotal_price}
-                    </TableCell>
-                    <TableCell align="center">
-                      {lineItem.term_duration}
-                    </TableCell>
-                    <TableCell> {lineItem.offer_sku} </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+
+          <TableGrid
+            gridRows={lineItems}
+            gridColumns={ORDER_DETAIL_COLUMNS}
+            gridDesktopColumns={DESKTOP_COLUMNS_ORDER_DETAIL}
+            gridTabletColumns={TABLET_COLUMNS_ORDER_DETAIL}
+            gridMobileColumns={MOBILE_COLUMNS_ORDER_DETAIL}
+            gridClass="datagrid-table-detail"
+          />
 
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
