@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import MsButton from "../../submodule/components/MSButton/MsButtontton";
-import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
+import MsButton from "../../submodule/components/GlobalButton/MsButton";
+import DownloadButton from "../../submodule/components/GlobalButton/DownloadButton";
 import { styled } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {

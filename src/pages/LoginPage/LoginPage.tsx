@@ -11,7 +11,7 @@ import {
   ErrorPopup,
 } from "../../submodule/components/AuthPopup/AuthPopup";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import { LoginApi } from "../../api/LoginApi";
 import { AppImages } from "../../shared/images";
 import "./Login.scss";
 const { microsoft, logo, loginPopupImage } = AppImages;
@@ -21,23 +21,13 @@ const Login = (props: any) => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_BASE}/sso/v1/signin`, {
-        params: { app: "portal" },
-      })
-      .then(function (response) {
-        var name = "__Host-Session";
-        var match = document.cookie.match(
-          RegExp("(?:^|;\\s*)" + name + "=([^;]*)")
-        );
-        if (match) {
-          navigate("/subscription");
-        }
-      })
-      .catch(function (error) {
-        // navigate("?e=unauthorized");
-      });
-  });
+    const response = LoginApi() === undefined ? false : LoginApi();
+    if (response) {
+      navigate("/subscription");
+    } else {
+      navigate("/app/login?e=unauthorized");
+    }
+  }, [navigate]);
 
   const attemptLogin = () => {
     var state = Math.floor(Math.random() * 1000) + 1;

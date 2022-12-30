@@ -188,6 +188,8 @@ export const ORDER_COLUMNS = [
     flex: 1,
     headerAlign: "center",
     align: "center",
+    getCellClassName: (params: any) =>
+      params.status === "active" ? "ms-active" : "ms-suspend",
   },
 ];
 

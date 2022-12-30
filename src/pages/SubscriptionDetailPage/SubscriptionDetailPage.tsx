@@ -1,8 +1,8 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import MsButton from "../../submodule/components/MSButton/MsButtontton";
-import DownloadButton from "../../submodule/components/DownloadButton/DownloadButton";
+import MsButton from "../../submodule/components/GlobalButton/MsButton";
+import DownloadButton from "../../submodule/components/GlobalButton/DownloadButton";
 import AlertMessage from "../../submodule/components/AlertMessage/AlertMessage";
 import { styled } from "@mui/system";
 import {
