@@ -21,8 +21,7 @@ const Login = (props: any) => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const response = LoginApi() === undefined ? false : LoginApi();
-    if (response) {
+    if (LoginApi()) {
       navigate("/subscription");
     } else {
       navigate("/app/login?e=unauthorized");

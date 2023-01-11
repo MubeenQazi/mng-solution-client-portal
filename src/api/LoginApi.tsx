@@ -14,4 +14,6 @@ export const LoginApi = () => {
     .catch(function (error) {
       return false;
     });
+
+  return false;
 };

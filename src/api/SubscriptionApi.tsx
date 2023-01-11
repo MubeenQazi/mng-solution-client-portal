@@ -27,4 +27,6 @@ export const SubscriptionPostApi = (id: string, value: any) => {
     .catch(() => {
       return false;
     });
+
+  return false;
 };

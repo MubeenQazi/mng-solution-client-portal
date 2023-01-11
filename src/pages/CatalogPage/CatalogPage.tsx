@@ -72,11 +72,7 @@ const CatalogPage = () => {
     let payment = option === "annually" ? "Y" : "";
     let termDuration = "P" + quantity + cycle + payment;
 
-    const response =
-      OrderPostApi(id, quantity, billingCycle, termDuration, sku) === undefined
-        ? false
-        : OrderPostApi(id, quantity, billingCycle, termDuration, sku);
-    if (response) {
+    if (OrderPostApi(id, quantity, billingCycle, termDuration, sku)) {
       setMessage("success");
       setAlert(true);
 
@@ -357,5 +353,6 @@ const CatalogPage = () => {
     </div>
   );
 };
+
 
 export default CatalogPage;

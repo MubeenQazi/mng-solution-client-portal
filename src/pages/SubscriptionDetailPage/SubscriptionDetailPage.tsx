@@ -43,11 +43,7 @@ const SubscriptionDetailPage = () => {
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const response =
-      SubscriptionPostApi(id, value) === undefined
-        ? false
-        : SubscriptionPostApi(id, value);
-    if (response) {
+    if (SubscriptionPostApi(id, value)) {
       setMessage("success");
 
       setAlert(true);
